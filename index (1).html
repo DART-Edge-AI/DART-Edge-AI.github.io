@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+  body {
+    background-image: url(artemisorchestra.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    padding-top: 75px;
+    background-color: black;
+    margin: 0;
+    font-family: Arial,
+    sans-serif;
+    font-weight: bold;
+  }  
+  h1 {
+    color: white;
+    font-weight: bold;
+  }
+  h1 img {
+    width: 300px;
+    height: 139px;
+    margin-right: 10px;
+  }
+  .draggable {
+    width: 25px; 
+    height: 25px;
+    background-color: deepskyblue;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  .draggable img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .draggable { width: 50px; height: 50px; }
+  #vf { width: 800px; height: 800px; }
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .toolbar-synth {
+   // padding-top: 25px;
+  //  padding-bottom: 50px;
+  }
+.toolbar-row {
+display: flex;
+justify-content: flex-end;
+margin-bottom: 20px;
+width: 100%;
+padding-right: 100px;
+} 
+button {
+    background-color: indigo;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+</style>
+</head>
+<body>
+
+<h1><img src="https://static.wixstatic.com/media/fe9774_338097b1921c4b36a9ea1e6d748d25a2~mv2.png" alt="Logo" width="300" height="139">Articren Wave</h1>
+<br>
+<div>
+<a href="mailto:symphony@articrenwave.com" style="color: white; font-weight: bold; text-decoration: none;">symphony@articrenwave.com</a>
+</div>
+<br>
+<br>
+<div class="toolbar-synth">
+  <div class="controls">
+    <button id="add-stave">Add Grand Staff</button>
+    <button id="playback">Play</button>
+  </div>
+</div>
+
+
+<div class="toolbar-row">
+  <div class="controls">
+    <div id="note" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'note')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_e1305ff9418f458c86e0f4a4d23afe5f.svg" alt="note" width="50" height="50">
+    </div>
+    <div id="note" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'note')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_c377573181b64d2bbf5350e196fda8ac.svg" alt="note" width="50" height="50">
+    </div>
+    <div id="note" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'note')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_5601e5d53fa84bbd9af90628560cff69.svg" alt="note" width="50" height="50">
+    </div>
+    <div id="note" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'note')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_8a449e6eee4e4abfb31cbe55b5f6d0f8.svg" alt="note" width="50" height="50">
+    </div>
+    <div id="note" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'note')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_e9d24eaeb3c64cee8df6b03968762816.svg" alt="note" width="50" height="50">
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="toolbar-row">
+  <div class="controls">
+    <div id="whole-rest" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'whole-rest')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_eb0dfaf716044a1a8b279337061fd307.svg" alt="whole-rest" width="50" height="50">
+    </div>
+    <div id="half-rest" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'half-rest')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_d9daa15bd0274f15ab5bbaea687c641b.svg" alt="half-rest" width="50" height="50">
+    </div>
+    <div id="quarter-rest" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'quarter-rest')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_31b50456fac54039928e0b7b3c6944da.svg" alt="quarter-rest" width="50" height="50">
+    </div>
+    <div id="eighth-rest" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'eighth-rest')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_56017b9c9d30441cb5d6729f6cc8638a.svg" alt="eighth-rest" width="50" height="50">
+    </div>
+    <div id="sixteenth-rest" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'sixteenth-rest')">
+      <img src="https://static.wixstatic.com/shapes/fe9774_b99bf7b687144f6fb013ec37647b39ac.svg" alt="sixteenth-rest" width="50" height="50"> 
+      </div>
+      <div id="chopinmeasure" class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text', 'chopinmeasure')">
+        <img src="https://static.wixstatic.com/shapes/fe9774_18e05820ab4d4d2080a2ae2be7906788.svg" width="50" height="50">
+      </div>
+      
+      </div>
+</div>
+
+<div id="vf"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mudcube/MIDI.js@master/build/MIDI.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.30/Tone.js"></script>
+<script>
+
+let staveOffset = 50;
+let initialStaveOffset = -270; // adjust this to your preference
+const VF = Vex.Flow;
+const div = document.getElementById("vf");
+const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+renderer.resize(window.innerWidth, window.innerHeight);
+
+window.onload = function() {
+    document.getElementById('add-stave').addEventListener('click', addStave);
+};
+
+function addStave() {
+    staveOffset += 270;
+    div.style.height = (staveOffset + initialStaveOffset + 270) + "px"; // Adjust the SVG canvas height
+    renderer.resize(800, staveOffset + initialStaveOffset + 270); // Resize renderer
+    drawStave(staveOffset + initialStaveOffset);
+};
+
+function drawStave(y) {
+    const context = renderer.getContext();
+    context.setFillStyle("white");
+
+    // Calculate x-offset for centering the stave
+    const xOffset = (800 - 780) / 2;
+
+    const trebleStave = new VF.Stave(xOffset, y, 780);
+    trebleStave.addClef("treble").addTimeSignature("4/4");
+    trebleStave.setContext(context).draw();
+
+    const bassStave = new VF.Stave(xOffset, y+100, 780);
+    bassStave.addClef("bass");
+    bassStave.setContext(context).draw();
+}
+
+div.ondragover = function(event) {
+    event.preventDefault();
+};
+
+div.ondrop = function(event) {
+    event.preventDefault();
+
+    const x = event.pageX - div.offsetLeft; // Get the x-coordinate of the drop
+    const y = event.pageY - div.offsetTop; // Get the y-coordinate of the drop
+    const droppedSvgUrl = event.dataTransfer.getData('URL'); // Get the URL of the dropped SVG
+    appendSvgToStave(droppedSvgUrl, x, y + 375);
+};
+
+function appendSvgToStave(svgUrl, x, y) {
+    // Calculate the stave offset for appending the SVG
+    const staveHeight = 270;
+    let staveY = Math.floor((y - initialStaveOffset) / staveHeight) * staveHeight + initialStaveOffset;
+    
+    // Adjust for the initial stave offset
+    if (staveY === 0) {
+        staveY = initialStaveOffset;
+    }
+
+    // Create a new stave for the SVG if necessary
+    if (staveY >= staveOffset) {
+        addStave();
+    }
+
+    const imgElem = document.createElement("img");
+    imgElem.src = svgUrl; // The URL of the SVG
+    imgElem.style.position = "absolute";
+    imgElem.style.left = `${x}px`; // Position the SVG at the x-coordinate of the drop
+
+    // Calculate the y-coordinate for the SVG
+    const relativeY = y - staveY; // the position within the stave
+    const trebleStaveHeight = 100; // the height of the treble stave
+    const bassStaveHeight = 100; // the height of the bass stave
+    const lineSpacing = trebleStaveHeight / 4; // the spacing between the lines of the stave
+    const gap = 20; // the gap between treble and bass staves
+
+    if (relativeY < trebleStaveHeight) {
+        // It's the upper (treble) stave
+        imgElem.style.top = `${staveY + Math.round(relativeY / lineSpacing) * lineSpacing}px`;
+    } else if (relativeY < trebleStaveHeight + gap) {
+        // It's in the gap between staves, align to the nearest stave
+        if (relativeY - trebleStaveHeight < gap / 2) {
+            // Closer to the treble stave
+            imgElem.style.top = `${staveY + trebleStaveHeight}px`;
+        } else {
+            // Closer to the bass stave
+            imgElem.style.top = `${staveY + trebleStaveHeight + gap}px`;
+        }
+    } else {
+        // It's the lower (bass) stave
+        imgElem.style.top = `${staveY + trebleStaveHeight + gap + Math.round((relativeY - trebleStaveHeight - gap) / lineSpacing) * lineSpacing}px`;
+    }
+
+    div.appendChild(imgElem);
+}
+
+
+addStave();
+
+// Synth for playback
+const synth = new Tone.Synth().toDestination();
+
+// MIDI conversion
+const midi = new Tone.Frequency("B4").toMidi(); // Change "B4" to the note you want
+
+document.getElementById('playback').addEventListener('click', function() {
+    const now = Tone.now()
+    synth.triggerAttackRelease(Tone.Frequency(midi, "midi").toFrequency(), 0.2, now);
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
