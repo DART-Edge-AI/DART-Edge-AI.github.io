@@ -4,8 +4,7 @@
 <style>
   body {
     background-image: url(ao.png);
-    background-size: fill;
-    
+    background-size: fit;
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column; 
@@ -257,6 +256,34 @@ const synth = new Tone.Synth().toDestination();
 // MIDI conversion
 const midi = new Tone.Frequency("B4").toMidi(); // Change "B4" to the note you want
 
+document.getElementById('playback').addEventListener('click', function() {
+  const now = Tone.now()
+  synth.triggerAttackRelease(Tone.Frequency(midi, "midi").toFrequency(), 0.2, now);
+});
+
+
+// Changes the tone of the library to the given note where it was dropped on the stave
+const changeTone = (note) => {
+  // Code to change the tone of the library to the given note
+
+  // Play the note as an example
+  const midiNote = new Tone.Frequency(note).toMidi();
+  synth.triggerAttackRelease(Tone.Frequency(midiNote, "midi").toFrequency(), 0.2, now);
+}
+
+
+// Play the entire staves with the order of dropped elements from start to end
+const playStaves = (notes) => {
+  // Code to play the entire staves with the order of dropped elements from start to end
+
+  // Example code to play each note in the notes array
+  notes.forEach((note, index) => {
+    setTimeout(() => {
+      const midiNote = new Tone.Frequency(note).toMidi();
+      synth.triggerAttackRelease(Tone.Frequency(midiNote, "midi").toFrequency(), 0.2, now);
+    }, index * 200); // Play each note with a delay of 200 ms
+  });
+}
 document.getElementById('playback').addEventListener('click', function() {
     const now = Tone.now()
     synth.triggerAttackRelease(Tone.Frequency(midi, "midi").toFrequency(), 0.2, now);
