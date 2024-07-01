@@ -89,6 +89,20 @@ button {
    bottom: 0;
    z-index: -1;
 }
+
+    .speaker-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .speaker-button img {
+      background-color: transparent;
+      width: 100px;
+      height: 100px;
+    }
+
 </style>
      <link rel="shortcut icon" type="image/x-icon" href="AW.png">
 </head>
@@ -106,6 +120,32 @@ button {
 <a href="https://ko-fi.com/radicaldeepscale" style="color: white; font-weight: bold; text-decoration: none;"><u>To support this project visit Ko-fi.
 </u></a>
 </div>
+<br>
+      <div class="DARTSound">
+        <!-- Button to control audio -->
+        <button id="mute" onClick="playPause()" class="speaker-button">
+          <img id="speaker-icon" src="https://static.wixstatic.com/media/2451db_f3535dbdc10b4117a28832eeef15fa71~mv2.png" alt="Play">
+          <audio id="backgroundMusic" src="https://static.wixstatic.com/mp3/2451db_3d232605a51744daaf4e8f0e6f8fb0a0.mp3" autoplay loop></audio>
+        </button>
+
+        <script>
+          const audioElement = document.getElementById('backgroundMusic');
+          const speakerIcon = document.getElementById('speaker-icon');
+
+          function playPause() {
+            if (audioElement.paused) {
+              audioElement.play();
+              speakerIcon.src = "https://static.wixstatic.com/media/2451db_18a14b6ce43e4412bbe3edb353b6f399~mv2.png"; // Switch to pause icon
+              speakerIcon.alt = "Pause";
+            } else {
+              audioElement.pause();
+              speakerIcon.src = "https://static.wixstatic.com/media/2451db_f3535dbdc10b4117a28832eeef15fa71~mv2.png"; // Switch to play icon
+              speakerIcon.alt = "Play";
+            }
+          }
+        </script>
+      </div>
+
 <br>
 <br>
 <div class="toolbar-synth">
