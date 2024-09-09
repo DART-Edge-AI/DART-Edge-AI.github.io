@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articren Wave</title>
+    <style>
+        body {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+            padding-top: 75px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        h1 img {
+            width: 400px;
+            height: auto;
+        }
+
+        .draggable {
+            width: 50px;
+            height: 50px;
+            background-color: deepskyblue;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .draggable img {
+            width: 25px;
+            height: 25px;
+        }
+
+        #vf {
+            width: 800px;
+            height: 800px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .toolbar-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            width: 100%;
+            padding-right: 100px;
+        }
+
+        button {
+            background-color: indigo;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #background-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: -1;
+        }
+
+        .speaker-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .speaker-button img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<video id="background-video" autoplay loop muted poster="https://raw.githubusercontent.com/DART-Edge-AI/DART-Edge-AI.github.io/main/camera_pull_out_3c5e67.mp4">
+    <source src="https://raw.githubusercontent.com/DART-Edge-AI/DART-Edge-AI.github.io/main/camera_pull_out_3c5e67.mp4" type="video/mp4">
+</video>
+
+<a href="https://www.dartmeadow.com" target="_blank"><h1><img src="AW.png" alt="Logo"></h1></a>
+
+<div><h1>In Development.</h1></div>
+<br><br>
+<div>
+    <a href="https://ko-fi.com/radicaldeepscale" style="color: white; font-weight: bold; text-decoration: none;"><u>To support this project visit Ko-fi.</u></a>
+</div>
+<br>
+<div class="DARTSound">
+    <button id="mute" onClick="playPause()" class="speaker-button">
+        <img id="speaker-icon" src="https://static.wixstatic.com/media/2451db_f3535dbdc10b4117a28832eeef15fa71~mv2.png" alt="Play">
+        <audio id="backgroundMusic" src="https://static.wixstatic.com/mp3/2451db_3d232605a51744daaf4e8f0e6f8fb0a0.mp3" autoplay loop></audio>
+    </button>
+</div>
+
+<br><br>
+<div class="toolbar-synth">
+    <div class="controls">
+        <button id="add-stave">Add Grand Staff</button>
+        <button id="playback">Play</button>
+    </div>
+</div>
+
+<div id="vf"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mudcube/MIDI.js@master/build/MIDI.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.30/Tone.js"></script>
+<script>
+    let staveOffset = 50;
+    let initialStaveOffset = -270;
+    const VF = Vex.Flow;
+    const div = document.getElementById("vf");
+    const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+    renderer.resize(window.innerWidth, window.innerHeight);
+
+    window.onload = function() {
+        document.getElementById('add-stave').addEventListener('click', addStave);
+    };
+
+    function addStave() {
+        staveOffset += 270;
+        div.style.height = (staveOffset + initialStaveOffset + 270) + "px";
+        renderer.resize(800, staveOffset + initialStaveOffset + 270);
+        drawStave(staveOffset + initialStaveOffset);
+    };
+
+    function drawStave(y) {
+        const context = renderer.getContext();
+        context.setFillStyle("white");
+
+        const xOffset = (800 - 780) / 2;
+
+        const trebleStave = new VF.Stave(xOffset, y, 780);
+        trebleStave.addClef("treble").addTimeSignature("4/4");
+        trebleStave.setContext(context).draw();
+
+        const bassStave = new VF.Stave(xOffset, y + 100, 780);
+        bassStave.addClef("bass");
+        bassStave.setContext(context).draw();
+    }
+
+    div.ondragover = function(event) {
+        event.preventDefault();
+    };
+
+    div.ondrop = function(event) {
+        event.preventDefault();
+        const x = event.pageX - div.offsetLeft;
+        const y = event.pageY - div.offsetTop;
+        const droppedSvgUrl = event.dataTransfer.getData('URL');
+        appendSvgToStave(droppedSvgUrl, x, y + 375);
+    };
+
+    function appendSvgToStave(svgUrl, x, y) {
+        const staveHeight = 270;
+        let staveY = Math.floor((y - initialStaveOffset) / staveHeight) * staveHeight + initialStaveOffset;
+
+        if (staveY === 0) {
+            staveY = initialStaveOffset;
+        }
+
+        if (staveY >= staveOffset) {
+            addStave();
+        }
+
+        const imgElem = document.createElement("img");
+        imgElem.src = svgUrl;
+        imgElem.style.position = "absolute";
+        imgElem.style.left = `${x}px`;
+
+        const relativeY = y - staveY;
+        const trebleStaveHeight = 100;
+        const bassStaveHeight = 100;
+        const lineSpacing = trebleStaveHeight / 4;
+        const gap = 20;
+
+        if (relativeY < trebleStaveHeight) {
+            imgElem.style.top = `${staveY + Math.round(relativeY / lineSpacing) * lineSpacing}px`;
+        } else if (relativeY < trebleStaveHeight + gap) {
+            imgElem.style.top = relativeY - trebleStaveHeight < gap / 2 ? `${staveY + trebleStaveHeight}px` : `${staveY + trebleStaveHeight + gap}px`;
+        } else {
+            imgElem.style.top = `${staveY + trebleStaveHeight + gap + Math.round((relativeY - trebleStaveHeight - gap) / lineSpacing) * lineSpacing}px`;
+        }
+
+        div.appendChild(imgElem);
+    }
+
+    const synth = new Tone.Synth().toDestination();
+    const midi = new Tone.Frequency("B4").toMidi();
+
+    document.getElementById('playback').addEventListener('click', function() {
+        const now = Tone.now();
+        synth.triggerAttackRelease(Tone.Frequency(midi, "midi").toFrequency(), 0.2, now);
+    });
+
+    function playPause() {
+        const audioElement = document.getElementById('backgroundMusic');
+        const speakerIcon = document.getElementById('speaker-icon');
+        if (audioElement.paused) {
+            audioElement.play();
+            speakerIcon.src = "https://static.wixstatic.com/media/2451db_18a14b6ce43e4412bbe3edb353b6f399~mv2.png";
+            speakerIcon.alt = "Pause";
+        } else {
+            audioElement.pause();
+speakerIcon.src = "https://static.wixstatic.com/media/2451db_f3535dbdc10b4117a28832eeef15fa71~mv2.png";
+speakerIcon.alt = "Play";
+        }
+    }
+</script>
+
+</body>
+</html>
